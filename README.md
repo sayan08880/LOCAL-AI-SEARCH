@@ -50,10 +50,8 @@ Checks the configuration and connection status of:
 
 ## Screenshots
 
-Add your application screenshots to the `screenshots` folder.
-
 ### Main Menu
-![Main Menu](screenshots/main-menu.png)
+![Main Menu](Img/I.png)
 
 ## Requirements
 

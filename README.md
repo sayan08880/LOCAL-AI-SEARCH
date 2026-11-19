@@ -1,64 +1,91 @@
+# LOCAL-AI-SEARCH
 
-# HULK AI
+<p align="center">
+  <strong>A Python-based AI assistant powered by Ollama, Gmail API and Tavily Web Search.</strong>
+</p>
 
-A local AI assistant built with Python, Ollama, Gmail API, and Tavily Web Search.
+![Python](https://img.shields.io/badge/Python-3-blue?logo=python)
+![Ollama](https://img.shields.io/badge/AI-Ollama-black)
+![Gmail](https://img.shields.io/badge/Email-Gmail%20API-red)
+![Tavily](https://img.shields.io/badge/Search-Tavily-purple)
+![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey)
+
+## About the Project
+
+LOCAL-AI-SEARCH is a Python-based AI assistant that combines a locally running Ollama language model with Gmail automation and Tavily web search.
+
+It helps users analyse emails, generate email drafts, and search the web using AI-generated answers.
+
+The application runs through an interactive terminal interface.
 
 ## Features
 
-- Local AI responses using Ollama.
-- Gmail email analysis and summarization.
-- Read up to 5 recent Gmail emails.
-- Generate email drafts using AI.
-- Web search using Tavily API.
-- Terminal-based interactive menu.
-- Gmail emails are never sent automatically.
+### 1. Local AI with Ollama
+- Connects to a local Ollama server.
+- Uses a configurable AI model.
+- Generates AI responses using the Ollama API.
+- Keeps model inference on the configured Ollama service.
 
-## Project Structure
+### 2. Gmail Automation
+- Connects to Gmail using Google OAuth authentication.
+- Retrieves recent emails.
+- Analyses email content using Ollama.
+- Identifies important information and possible actions.
+- Generates email subjects and message bodies.
+- Saves generated messages as Gmail drafts after confirmation.
 
-```text
-HULK-AI/
-├── main.py
-├── requirements.txt
-├── .env.example
-├── .gitignore
-├── README.md
-└── hulk/
-    ├── __init__.py
-    ├── config.py
-    ├── cli.py
-    ├── ollama_client.py
-    ├── gmail_service.py
-    ├── gmail_ai.py
-    └── web_search.py
-```
+**Note:** The application saves drafts; it does not automatically send emails.
+
+### 3. Tavily Web Search
+- Searches the internet using Tavily.
+- Retrieves up to four search results.
+- Uses Ollama to analyse the returned information.
+- Displays AI-generated answers with source URLs.
+
+### 4. Service Status
+Checks the configuration and connection status of:
+- Gmail
+- Ollama
+- Tavily API key
+
+## Screenshots
+
+Add your application screenshots to the `screenshots` folder.
+
+### Main Menu
+![Main Menu](screenshots/main-menu.png)
 
 ## Requirements
 
 - Python 3
+- pip
 - Ollama
-- Qwen 2.5 1.5B model
+- An installed Ollama model
 - Tavily API key
-- Google Gmail API credentials
+- Google Cloud project
+- Gmail API and OAuth credentials
+- Internet connection for Gmail and web search
 
-## Installation on Fedora
+## Installation
 
-### 1. Clone or create the project folder
+### 1. Clone the repository
 
 ```bash
-mkdir -p ~/HULK-AI/hulk
-cd ~/HULK-AI
+git clone YOUR_GITHUB_REPOSITORY_URL
+cd LOCAL-AI-SEARCH
 ```
 
 ### 2. Create a virtual environment
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 
 ### 3. Install dependencies
 
 ```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
@@ -69,9 +96,28 @@ cp .env.example .env
 nano .env
 ```
 
-Add your Tavily API key to the `.env` file.
+Example configuration:
 
-### 5. Install the Ollama model
+```env
+OLLAMA_URL=http://localhost:11434
+OLLAMA_MODEL=qwen2.5:1.5b
+
+TAVILY_API_KEY=YOUR_TAVILY_API_KEY
+
+GMAIL_CLIENT_FILE=credentials.json
+GMAIL_TOKEN_FILE=token.json
+GMAIL_MAX_READ=5
+```
+
+Replace the example API key with your own.
+
+## Ollama Setup
+
+Install Ollama:
+
+https://ollama.com/download
+
+Download the default model:
 
 ```bash
 ollama pull qwen2.5:1.5b
@@ -83,57 +129,123 @@ Start Ollama:
 ollama serve
 ```
 
-### 6. Configure Gmail API
+Check installed models:
+
+```bash
+ollama list
+```
+
+## Gmail API Configuration
 
 1. Open Google Cloud Console.
 2. Create a Google Cloud project.
 3. Enable Gmail API.
 4. Configure the OAuth consent screen.
-5. Create an OAuth Client ID.
-6. Select Desktop application.
-7. Download the JSON credentials.
-8. Save the downloaded file as `credentials.json` inside the HULK-AI folder.
+5. Create OAuth credentials.
+6. Select Desktop Application.
+7. Download the credentials JSON file.
+8. Rename it to `credentials.json`.
+9. Place it in the project directory.
+10. Connect your Gmail account through the application.
 
-If your OAuth app is in Testing mode, add your Gmail account as a test user.
+Google Cloud Console:
 
-### 7. Run HULK AI
+https://console.cloud.google.com/
+
+The application uses Gmail read-only and compose permissions.
+
+## Running the Application
+
+Activate the virtual environment:
+
+```bash
+source .venv/bin/activate
+```
+
+Start the application:
 
 ```bash
 python main.py
 ```
 
-## Main Menu
+## Project Structure
 
-1. Gmail Automation
-2. Web Searcher
-3. Refresh All Status
-4. Exit
+```text
+LOCAL-AI-SEARCH/
+│
+├── main.py
+├── requirements.txt
+├── README.md
+├── .env.example
+├── .env
+├── credentials.json
+├── token.json
+│
+├── hulk/
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── config.py
+│   ├── gmail_ai.py
+│   ├── gmail_service.py
+│   ├── ollama_client.py
+│   └── web_search.py
+│
+└── screenshots/
+    ├── main-menu.png
+    ├── gmail-menu.png
+    ├── gmail-analysis.png
+    ├── email-draft.png
+    ├── web-search.png
+    └── system-status.png
+```
 
-## Gmail Features
+## Technologies Used
 
-- Check Gmail connection.
-- Analyse the latest 5 emails.
-- Summarize email content.
-- Generate an email subject and body.
-- Drafts are displayed for manual copying.
-
-**Note:** The Gmail integration uses read-only access. It does not send emails or save drafts to Gmail.
+| Technology | Purpose |
+|---|---|
+| Python | Main programming language |
+| Ollama | Local AI model execution |
+| Qwen | AI language model |
+| Gmail API | Email integration |
+| Google OAuth | Gmail authentication |
+| Tavily | Web search |
+| Requests | HTTP communication |
+| Python-dotenv | Environment configuration |
 
 ## Security
 
-Never share these files publicly:
+- Never upload `.env` to GitHub.
+- Never publish `credentials.json`.
+- Never share `token.json`.
+- Keep API keys private.
+- Review AI-generated email drafts before sending.
+- Do not expose your Ollama service to untrusted networks.
 
-- `.env`
-- `credentials.json`
-- `token.json`
+If credentials have already been published, rotate or revoke them.
 
-Do not upload them to GitHub.
+## Limitations
 
-## Technologies
+- Ollama must be installed and running separately.
+- Web search requires a valid Tavily API key.
+- Gmail requires Google OAuth authentication.
+- Gmail email retrieval is limited to five messages.
+- Tavily search retrieves up to four results.
+- The supplied project is a terminal application, not a native desktop GUI.
 
-- Python
-- Ollama
-- Qwen 2.5 1.5B
-- Gmail API
-- Tavily Search API
-# LOCAL-AI-SEARCH
+## Future Improvements
+
+- Native Linux desktop application.
+- AppImage distribution.
+- Improved graphical user interface.
+- Chat history management.
+- More AI model support.
+- Additional search providers.
+- Improved email analysis and reporting.
+
+## License
+
+No license was included in the supplied project archive. Add a suitable LICENSE file before granting public reuse or distribution rights.
+
+---
+
+**LOCAL-AI-SEARCH — Local AI assistance, Gmail automation and web search in one Python application.**

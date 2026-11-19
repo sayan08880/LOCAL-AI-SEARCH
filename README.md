@@ -69,7 +69,7 @@ Checks the configuration and connection status of:
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone [YOUR_GITHUB_REPOSITORY_URL](https://github.com/sayan08880/LOCAL-AI-SEARCH.git)
 cd LOCAL-AI-SEARCH
 ```
 
